@@ -1,0 +1,22 @@
+
+<div class="container">
+
+
+
+<h3>Poniżej jakiej ceny chcesz ustawić alert?</h3>
+  <flash-messages></flash-messages>
+  <br>
+  <br>
+  <input type="number"  #price id="price"
+         maxlength="5"
+         size="20%" />
+  <br>
+  <input type="date"  #date id="date"
+         size="20%" />
+  <br>
+<input type="submit" value="Zatwierdź" (click)="AddAlert(price.value, date.value)"/>
+
+
+
+</div>
+
