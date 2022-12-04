@@ -3,14 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace angularapi.MyTools
 {
-    public class BackgroundTask 
+    public class BackgroundTask
     {
         private readonly ILogger<BackgroundService> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
@@ -21,7 +19,7 @@ namespace angularapi.MyTools
             _scopeFactory = scopeFactory;
         }
 
- 
+
         public async Task RemoveUnverifiedUserAsync(string randomToken)
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -47,6 +45,6 @@ namespace angularapi.MyTools
             }
         }
 
-      
+
     }
 }

@@ -1,20 +1,21 @@
 ﻿using angularapi.Models;
 using AngularApi.DataBase;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AngularApi.Repository
 {
-   public interface IWebParser
+    public interface IWebParser
     {
         public CurrencyDBModel DownloadActualCurrency(string iso);
+
+        public CurrencyDBModel DownloadCurrencyFromDate(string iso, string date);
 
         public void SendCurrencyToDataBase(List<CurrencyDBModel> _listOfValue, CashDBContext _context);
 
         public void SaveToFile(string pathToFile, string text, bool appendText);
 
         public string[] GetIsoFromFile(string[] isoArray);
+
+        public List<string> GetIsoFromFile();
     }
 }

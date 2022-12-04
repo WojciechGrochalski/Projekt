@@ -17,8 +17,8 @@ namespace AngularApi.MyTools
         List<CurrencyDBModel> listOfCurrency = new List<CurrencyDBModel>();
         CurrencyDBModel _currencyModel = new CurrencyDBModel();
         private IMailService _mailService;
-  
-           
+
+
         public MyWebParser(IMailService mailService)
         {
             _mailService = mailService;
@@ -40,6 +40,32 @@ namespace AngularApi.MyTools
 
         }
 
+        public CurrencyDBModel DownloadCurrencyFromDate(string iso, string date)
+        {
+            string url = $"http://api.nbp.pl/api/exchangerates/rates/c/{iso}/{date}/?format=json";
+            string reply;
+            try
+            {
+                reply = webClient.DownloadString(url);
+            }
+            catch (Exception)
+            {
+                url = "http://api.nbp.pl/api/exchangerates/rates/c/" + iso + "/?today/?format=json";
+                reply = webClient.DownloadString(url);
+
+            }
+            dynamic jObject = JObject.Parse(reply);
+            DateTime currencyDate = DateTime.Parse(date);
+            string name = jObject.currency;
+            string code = jObject.code;
+            float askPrice = jObject.rates[0].ask;
+            float bidPrice = jObject.rates[0].bid;
+            CurrencyDBModel _cashModel = new CurrencyDBModel(name, code, bidPrice, askPrice, currencyDate);
+
+            return _cashModel;
+
+        }
+
         public void SendCurrencyToDataBase(List<CurrencyDBModel> _listOfValue, CashDBContext _context)
         {
             if (!CheckDatabase(_context))
@@ -52,7 +78,7 @@ namespace AngularApi.MyTools
                 SendTodayCurrencyToSubscribers(_context, _mailService, _listOfValue);
                 CheckAndSendAlert(_context, _mailService, _listOfValue);
             }
-            
+
         }
 
         // Verify IF database was already updated today
@@ -76,7 +102,7 @@ namespace AngularApi.MyTools
             {
                 table += $@" <tr><td>{item.Data.ToShortDateString()}</td>
                              <td>{item.Name}</td >
-                             <td>{item.AskPrice } PLN </td>
+                             <td>{item.AskPrice} PLN </td>
                              <td>{item.BidPrice} PLN </td></tr>";
             }
             string message = $@"<font face='Arial' size='6px'><p>Dzisiejsze kursy walut:</p></font><br>
@@ -90,12 +116,12 @@ namespace AngularApi.MyTools
 
             return message += table + $@"</tr></tbody></table></font>";
         }
-        private string MakeMessageForAlert(string iso, string price,float value)
+        private string MakeMessageForAlert(string iso, string price, float value)
         {
             return $@"<h3>Alert walutowy dla {iso}</h3>
                              <h4> Cena {price} {iso} z dnia {DateTime.Now.ToShortDateString()} to: </h4>
                                 <h3>{value}</h3>";
-                             
+
         }
         private void SendTodayCurrencyToSubscribers(CashDBContext _context, IMailService _mailService, List<CurrencyDBModel> listOfCash)
         {
@@ -113,7 +139,7 @@ namespace AngularApi.MyTools
         private void CheckAndSendAlert(CashDBContext _context, IMailService _mailService, List<CurrencyDBModel> listOfCash)
         {
             var alerts = _context.Remainders.ToList();
-            foreach (Remainder item in alerts )
+            foreach (Remainder item in alerts)
             {
                 if (item.Price == "Less")
                 {
@@ -182,6 +208,21 @@ namespace AngularApi.MyTools
             path = Path.GetFullPath(path);
             string fileData = File.ReadAllText(path);
             return _ = JsonConvert.DeserializeObject<string[]>(fileData);
+
+        }
+
+        public List<string> GetIsoFromFile()
+        {
+            string path = @"Data/Iso.json";
+            path = Path.GetFullPath(path);
+            string fileData = File.ReadAllText(path);
+            var list = JsonConvert.DeserializeObject<string[]>(fileData);
+            List<string> result = new List<string>();
+            foreach (string iso in list)
+            {
+                result.Add(iso);
+            }
+            return result;
 
         }
     }

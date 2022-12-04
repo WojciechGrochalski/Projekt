@@ -3,9 +3,7 @@ using angularapi.MyTools;
 using AngularApi.DataBase;
 using AngularApi.Repository;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace angularapi.Services
 {
@@ -48,7 +46,7 @@ namespace angularapi.Services
             }
             _context.SaveChanges();
         }
-        public  string GenerateToken(string username, int userID)
+        public string GenerateToken(string username, int userID)
         {
             var newToken = TokenManager.GenerateRefreshToken(username);
             RefreshToken refreshToken = new RefreshToken(newToken.refreshTokenKey, userID);

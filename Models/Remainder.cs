@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace angularapi.Models
 {
@@ -15,6 +12,6 @@ namespace angularapi.Models
         public DateTime EndDateOfAlert { get; set; }
         public int UserID { get; set; }
 
-        public  UserDBModel User { get; set; }
+        public UserDBModel User { get; set; }
     }
 }

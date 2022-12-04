@@ -1,14 +1,11 @@
 ﻿using angularapi.Models;
-using angularapi.MyTools;
 using AngularApi.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace angularapi.Controllers
 {

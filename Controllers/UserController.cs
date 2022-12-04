@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using angularapi.Models;
+﻿using angularapi.Models;
+using angularapi.MyTools;
 using AngularApi.DataBase;
 using AngularApi.Repository;
-using Microsoft.AspNetCore.Mvc;
-using angularapi.MyTools;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace angularapi.Controllers
 {
@@ -102,7 +97,7 @@ namespace angularapi.Controllers
 
         [HttpPost("baseUrl")]
         [AllowAnonymous]
-        public IActionResult GetBaseUrl( string url)
+        public IActionResult GetBaseUrl(string url)
         {
             ClientBaseUrl = url;
             return Ok();
@@ -134,6 +129,6 @@ namespace angularapi.Controllers
             _context.SaveChanges();
             return Ok(new { message = "Usunięto cię z subskrybcji" });
         }
-       
+
     }
 }

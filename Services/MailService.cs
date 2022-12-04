@@ -1,17 +1,14 @@
-﻿using MailKit.Net.Smtp;
+﻿using AngularApi.Repository;
+using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AngularApi.Repository;
-using Microsoft.Extensions.Options;
 
 namespace angularapi.Services
 {
-    public class MailService: IMailService
+    public class MailService : IMailService
     {
         private readonly AppSettings _appSettings;
 
@@ -20,11 +17,11 @@ namespace angularapi.Services
             _appSettings = appSettings.Value;
         }
 
-        public void SendMail( string to, string subject, string html)
+        public void SendMail(string to, string subject, string html)
         {
             // create message
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse("cash-service@email.com"));
+            email.From.Add(MailboxAddress.Parse("cashdataa@op.pl"));
             email.To.Add(MailboxAddress.Parse(to));
             email.Subject = subject;
             email.Body = new TextPart(TextFormat.Html) { Text = html };
@@ -36,7 +33,7 @@ namespace angularapi.Services
             smtp.Send(email);
             smtp.Disconnect(true);
         }
-        public Tuple<string,string> GenerateMessageForUserVerification(string href, string token)
+        public Tuple<string, string> GenerateMessageForUserVerification(string href, string token)
         {
             string subject = "Sign-up Verification API - Verify Email";
             string message = $@"<p>Please use the below token to verify your email address with the <code>/accounts/verify-email</code> api route:</p>

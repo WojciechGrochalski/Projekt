@@ -7,7 +7,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace angularapi.MyTools
 {
@@ -24,14 +23,14 @@ namespace angularapi.MyTools
                 .AddClaim("token", token)
                 .Encode();
         }
-        public static string GenerateResetPassToken(string token,string email)
+        public static string GenerateResetPassToken(string token, string email)
         {
             return new JwtBuilder()
                 .WithAlgorithm(new HMACSHA256Algorithm())
                 .WithSecret(Encoding.ASCII.GetBytes(_secret))
                 .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(10).ToUnixTimeSeconds())
                 .AddClaim("token", token)
-                .AddClaim("email",email)
+                .AddClaim("email", email)
                 .Encode();
         }
 
@@ -48,7 +47,7 @@ namespace angularapi.MyTools
         public static (string refreshTokenKey, string jwt) GenerateRefreshToken(string user)
         {
             string key = RandomTokenString();
-            string jwt= new JwtBuilder()
+            string jwt = new JwtBuilder()
                 .WithAlgorithm(new HMACSHA256Algorithm())
                 .WithSecret(Encoding.ASCII.GetBytes(_secret))
                 .AddClaim("exp", DateTimeOffset.UtcNow.AddHours(2).ToUnixTimeSeconds())
@@ -94,7 +93,7 @@ namespace angularapi.MyTools
                 return null;
             }
         }
-        public static string ValidateJwtToken(string token,string claim)
+        public static string ValidateJwtToken(string token, string claim)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);

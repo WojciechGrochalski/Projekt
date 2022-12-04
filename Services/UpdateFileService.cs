@@ -1,19 +1,15 @@
-﻿using AngularApi.DataBase;
+﻿using angularapi.Models;
+using AngularApi.DataBase;
 using AngularApi.Repository;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.DependencyInjection;
 using TimeZoneConverter;
-using angularapi.Models;
 
 namespace angularapi.Services
 {
@@ -62,12 +58,12 @@ namespace angularapi.Services
                             listOfCash.Add(_update.DownloadActualCurrency(iso));
                         }
                         _update.SendCurrencyToDataBase(listOfCash, _context);
-                    }          
+                    }
                 }
             }
         }
 
-     
+
         private bool ChceckItIsAvailableApi()
         {
             TimeZoneInfo tzi = TZConvert.GetTimeZoneInfo("Central Europe Standard Time");

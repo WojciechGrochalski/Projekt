@@ -8,10 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace angularapi.Services
@@ -63,7 +61,7 @@ namespace angularapi.Services
 
             return user;
         }
-        public bool VerifyEmail([FromBody]string token)
+        public bool VerifyEmail([FromBody] string token)
         {
             try
             {

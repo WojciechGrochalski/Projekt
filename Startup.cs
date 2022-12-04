@@ -1,6 +1,9 @@
 
+using angularapi.Services;
+using AngularApi.DataBase;
 using AngularApi.MyTools;
 using AngularApi.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -8,13 +11,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using AngularApi.DataBase;
-using System;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
+using System;
 using System.Text;
 using System.Threading.Tasks;
-using angularapi.Services;
 
 namespace AngularApi
 {
@@ -78,13 +80,13 @@ namespace AngularApi
                         {
                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
                             {
-                                context.Response.Headers.Add("Token-Expired", "true");   
+                                context.Response.Headers.Add("Token-Expired", "true");
                             }
                             return Task.CompletedTask;
                         }
                     };
                 }
-              
+
                 return jwtBearerOptions;
             }
 
@@ -94,7 +96,7 @@ namespace AngularApi
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
             .AddJwtBearer(jwtBearerOptions => options(jwtBearerOptions, "access"))
-            .AddJwtBearer ("refresh",jwtBearerOptions => options(jwtBearerOptions, "refresh"));
+            .AddJwtBearer("refresh", jwtBearerOptions => options(jwtBearerOptions, "refresh"));
 
 
 

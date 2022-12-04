@@ -1,9 +1,7 @@
 ﻿using angularapi.Models;
 using AngularApi.DataBase;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace angularapi.Services
 {
