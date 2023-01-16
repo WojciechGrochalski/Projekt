@@ -20,6 +20,8 @@ import {ErrorInterceptorService} from "../Services/error-interceptor.service";
 import {VerifyUserComponent} from "../Components/verify-user/verify-user.component";
 import {NewPasswordComponent} from "../Components/new-password/new-password.component";
 import {AuthGuard} from "../Services/auth-guard.service";
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 
 @NgModule({
@@ -55,7 +57,8 @@ import {AuthGuard} from "../Services/auth-guard.service";
       { path: 'forgot-password', component: ForgetPasswordComponent},
       {path: 'set-alert/:iso/:price', component: SetAlertComponent, canActivate: [AuthGuard]}
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgMultiSelectDropDownModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
