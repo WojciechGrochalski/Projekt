@@ -1,64 +1,74 @@
 <div class="container">
 
-<h1>NBP</h1>
+<h4>Aktuale kursy walut na podstawie danych NBP</h4>
+<br/>
 
-<p *ngIf="!cash_list"><em>Loading...</em></p>
+<h5>Wykresy walut</h5>
 
-<h4>Aktualne kursy walut z NBP:</h4>
 
-<label >ISO Waluty: </label>
+<div style="display:flex;column-gap: 2rem;">
+  <div>
+    <label >Wybierz waluty aby wyświetlić wykres </label>
+    <br/>
+    <div style="display: inline-block ; align-items: flex-start; justify-content: flex-start; min-width: 360px;">
+      <ng-multiselect-dropdown
+      [placeholder]="'Wybierz'"
+      [settings]="dropdownSettings"
+      [data]="dropdownList"
+      [(ngModel)]="selectedItems"
+      (onSelect)="onItemSelect($event)"
+      (onDeSelect)=" onItemDeSelect($event)"
+    >
+    </ng-multiselect-dropdown>
+    </div>
+  </div>
 
-<select #iso>
-  <option value="USD">USD $</option>
-  <option value="EUR">EUR €</option>
-  <option value="GBP">Funt szterling £</option>
-  <option value="AUD">Dolar australijski $</option>
-  <option value="CAD">Dolar kanadyjski $</option>
-  <option value="HUF">Forint (Węgry) Ft</option>
-  <option value="CZK"> Korona czeska Kč </option>
-  <option value="CHF">Frank szwajcarski fr.</option>
-  <option value="JPY">Jen (Japonia) ¥</option>
-  <option value="DKK">Korona duńska </option>
-  <option value="NOK">Korona norweska</option>
-  <option value="SEK">Korona Szwedzka</option>
-  <option value="XDR">SDR</option>
-</select>
-<select #count >
-  <option  value=10>10</option>
-  <option value=20>20</option>
-  <option value=30>30</option>
-</select>
-<button type="button" class="btn btn-default" (click)="TakeLastCurrency(iso.value, count.value) ">Send request</button>
+  <!-- <div>
+    <label >Wybierz ilość dni </label>
+    <br/>
 
+    <select #count >
+      <option value=5>5</option>
+      <option value=10>10</option>
+      <option value=20>20</option>
+      <option value=30>30</option>
+    </select>
+  </div> -->
+</div>
+
+<!-- <br/><br/>
+<button type="button" class="btn btn-sm btn-primary me-2" (click)="TakeLastCurrency(iso.value, count.value) ">Send request</button>
+<br/> -->
+<br/>
 <div *ngIf="!result; then table; else api;"></div>
 <ng-template #api>
   <p *ngIf="!result"><em>Loading...</em></p>
-
   <apx-chart [series]="series" [chart]="chart" [title]="title" [yaxis]="yaxis" [xaxis]="xaxis"></apx-chart>
-  <table class='table table-striped ' aria-labelledby="tableLabel">
-
-    <thead>
-      <tr>
-        <th>Data</th>
-        <th>Waluta</th>
-        <th>Cena kupna (Za tyle kupisz)</th>
-        <th>Cena sprzedaży (Za tyle sprzedasz)</th>
-        <th></th>
-
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cash of result">
-        <td>{{ cash.Data }}</td>
-        <td>{{ cash.Name}}</td>
-        <td>{{ cash.AskPrice }} PLN</td>
-        <td>{{ cash.BidPrice }} PLN</td>
-      </tr>
-    </tbody>
-  </table>
 </ng-template>
-  <ng-template #table>
-    <table class='table table-striped ' aria-labelledby="tableLabel">
+
+<div>
+  <div *ngFor="let chart of chartList">
+    <apx-chart
+      [title]="chart.title"
+      [series]="chart.series"
+      [chart]="chart.chart"
+      [colors]="chart.colors"
+      [yaxis]="chart.yaxis"
+      [xaxis]="chart.xaxis"
+      [dataLabels]="commonOptions.dataLabels"
+      [markers]="commonOptions.markers"
+      [stroke]="commonOptions.stroke"
+      [grid]="commonOptions.grid"
+      [tooltip]="commonOptions.tooltip"
+></apx-chart>
+  </div>
+</div>
+<br/>
+
+
+<h5>Tabela aktualnych kursów walut</h5>
+
+<table class='table table-striped ' aria-labelledby="tableLabel">
 
       <thead>
         <tr>
@@ -78,7 +88,5 @@
         </tr>
       </tbody>
     </table>
-  </ng-template>
-
 
 </div>
