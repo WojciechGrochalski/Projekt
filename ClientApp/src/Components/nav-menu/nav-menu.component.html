@@ -1,9 +1,9 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar mynavbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Walutomierz</a>
+    <div class="container" style="color:white">
+      <a class="navbar-brand" [routerLink]="['/']" style="color:white;font-weight:700; font-size: 32px;">Walutomierz</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -19,10 +19,14 @@
         [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/user-profile']">Subskrybcje</a>
+            <a class="nav-link text-light" [routerLink]="['/user-profile']"><b>Subskrybcje</b></a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/login']">Zaloguj się</a>
+          
+          <li *ngIf="!isLogged" class="nav-item" [routerLinkActive]="['link-active']" >
+            <a class="nav-link text-light fw-2" [routerLink]="['/login']"><b>Zaloguj się</b></a>
+          </li>
+          <li *ngIf="isLogged" class="nav-item" [routerLinkActive]="['link-active']" >
+            <a class="nav-link text-light" (click)="Logout()" style="cursor: pointer;"><b>Wyloguj</b></a>
           </li>
         </ul>
       </div>

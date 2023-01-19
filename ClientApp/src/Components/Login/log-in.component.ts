@@ -72,7 +72,7 @@ export class LogInComponent implements OnInit {
     this._authService.login(user)
       .subscribe(res => {
           if (res) {
-            this.router.navigate([this.returnUrl]);
+            this.router.navigateByUrl(this.returnUrl);
           } else {
             this.flashMessagesService.show('Nieprawidłowe dane', {cssClass: 'alert-danger', timeout: 3000});
             this.loading = false;
