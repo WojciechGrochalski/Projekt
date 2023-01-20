@@ -72,9 +72,9 @@ export class AuthService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    sessionStorage.removeItem('currentUser');
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('refreshToken');
     this.currentUserSubject.next(null);
   }
 }

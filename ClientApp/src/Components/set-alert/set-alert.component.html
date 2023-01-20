@@ -21,6 +21,7 @@
       class="set-button"
       type="submit"
       value="Zatwierdź"
+      [disabled]="!isAdding"
       (click)="AddAlert(price.value, date.value)"
     />
   </div>

@@ -3,7 +3,6 @@ import {UserService} from "../../Services/User.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Remainder} from "../../Models/Remainder";
 import {FlashMessagesService} from "angular2-flash-messages";
-import {resolve} from "@angular-devkit/core";
 
 @Component({
   selector: 'app-set-alert',
@@ -15,6 +14,7 @@ export class SetAlertComponent implements OnInit {
   priceLessThan:boolean;
   iso:string;
   userID:number;
+  isAdding:boolean;
 
   constructor(
     private userService: UserService,
@@ -38,17 +38,18 @@ export class SetAlertComponent implements OnInit {
 
   AddAlert(value: string, date: string){
     let alert = new Remainder();
+    this.isAdding=true;
     if(this.priceLessThan){
-      alert.Price='More';
-      alert.AskPrice= +value;
+      alert.price='More';
+      alert.askPrice= +value;
     }
     else{
-      alert.Price='Less';
-      alert.BidPrice= +value;
+      alert.price='Less';
+      alert.bidPrice= +value;
     }
-    alert.EndDateOfAlert=new Date(date);
-    alert.Code=this.iso;
-    alert.UserID=  this.userID;
+    alert.endDateOfAlert=new Date(date);
+    alert.code=this.iso;
+    alert.userID=  this.userID;
 
     this.userService.SetAlert(alert).subscribe(res =>{
         this.flashMessagesService.show(res.message, {cssClass: 'alert-success', timeout: 5000})

@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AngularApi.Controllers
@@ -66,23 +67,53 @@ namespace AngularApi.Controllers
         [HttpGet("{iso}/{count}")]
         public async Task<string> GetLastManyCurrency(string iso, int count)
         {
-            List<CurrencyModel> list = new List<CurrencyModel>();
-            CurrencyModel cashModel;
-
-            DateTime[] lastDays = Enumerable.Range(0, count).Select(i => DateTime.Now.Date.AddDays(-i)).ToArray();
-
-            List<CurrencyDBModel> currencyDBModels =new List<CurrencyDBModel>() ;
-            foreach (DateTime day in lastDays)
+            string result;
+            try
             {
-                currencyDBModels.Add(_webParser.DownloadCurrencyFromDate(iso, $"{day:yyyy-MM-dd}"));
-            }
+                List<CurrencyModel> list = new List<CurrencyModel>();
+                CurrencyModel cashModel;
 
-            foreach (CurrencyDBModel item in currencyDBModels)
-            {
-                list.Add(cashModel = new CurrencyModel(item));
+                DateTime[] lastDays = Enumerable.Range(0, count).Select(i => DateTime.Now.Date.AddDays(-i)).ToArray();
+
+                List<CurrencyDBModel> currencyDBModels = new List<CurrencyDBModel>();
+                foreach (DateTime day in lastDays)
+                {
+                    currencyDBModels.Add(_webParser.DownloadCurrencyFromDate(iso, $"{day:yyyy-MM-dd}"));
+                }
+
+                foreach (CurrencyDBModel item in currencyDBModels)
+                {
+                    list.Add(cashModel = new CurrencyModel(item));
+                }
+                await Task.CompletedTask;
+                result = JsonConvert.SerializeObject(list, Formatting.Indented);
             }
-            await Task.CompletedTask;
-            string result = JsonConvert.SerializeObject(list, Formatting.Indented);
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                Thread.Sleep(2000);
+                List<CurrencyModel> list = new List<CurrencyModel>();
+                CurrencyModel cashModel;
+
+                DateTime[] lastDays = Enumerable.Range(0, count).Select(i => DateTime.Now.Date.AddDays(-i)).ToArray();
+
+                List<CurrencyDBModel> currencyDBModels = new List<CurrencyDBModel>();
+                foreach (DateTime day in lastDays)
+                {
+                    currencyDBModels.Add(_webParser.DownloadCurrencyFromDate(iso, $"{day:yyyy-MM-dd}"));
+                }
+
+                foreach (CurrencyDBModel item in currencyDBModels)
+                {
+                    list.Add(cashModel = new CurrencyModel(item));
+                }
+                await Task.CompletedTask;
+                result = JsonConvert.SerializeObject(list, Formatting.Indented);
+
+            }
             return result;
 
         }

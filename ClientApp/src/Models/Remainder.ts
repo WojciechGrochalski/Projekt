@@ -1,10 +1,10 @@
 
 export class Remainder{
-  ID:number;
-  Price:string;
-  Code:string;
-  BidPrice:number;
-  AskPrice: number;
-  EndDateOfAlert: any;
-  UserID:number;
+  id:number;
+  price:string;
+  code:string;
+  bidPrice:number;
+  askPrice: number;
+  endDateOfAlert: any;
+  userID:number;
 }

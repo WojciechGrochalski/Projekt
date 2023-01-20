@@ -28,9 +28,6 @@ export class CashDataComponent implements OnInit {
 
   public cash_list: Cash[];
   public result: Cash[];
-  public chartData: string[] = [];
-  public askPrice: number[] = [];
-  public bidPrice: number[] = [];
 
   public chartList = [];
 

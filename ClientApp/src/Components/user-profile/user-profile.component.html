@@ -20,30 +20,27 @@
     </div>
   </div>
   <div class="container last">
-    <div *ngIf="remainders">
-      <div *ngIf="remainders.length > 0">
+      <div *ngIf="remainders?.length > 0">
         <h3 style="margin-bottom: 2rem">Twoje Alerty</h3>
         <div class="albums">
           <div class="card-columns">
             <div class="card" *ngFor="let alert of remainders">
               <div class="card-body">
                 <h5 style="color: #282f52; font-weight: 700 !important">
-                  {{ alert.Code }} / PLN
+                  {{ alert.code }} / PLN
                 </h5>
-                <p *ngIf="alert.BidPrice" class="card-text card-link"> Alert na cene sprzedaży, przy: {{alert.BidPrice.toFixed(2)}}PLN  </p>
-                <p *ngIf="alert.AskPrice" class="card-text card-link"> Alert na cene kupna, przy: {{alert.AskPrice.toFixed(2)}}PLN </p>
-                <p  class="card-text card-link" > Wygasa {{alert.EndDateOfAlert?.slice(0,-9)}}</p>
-              <!-- <p *ngIf="alert.AskPrice" class="card-text"> Alert na cene kupna, przy: {{alert.AskPrice.toFixed(2)}}PLN </p>
-              <p  class="card-text"> Wygasa {{alert.EndDateOfAlert.slice(0,-9)}}</p> -->
+                <p *ngIf="alert.bidPrice" class="card-text card-link"> Alert na cene sprzedaży, przy: {{alert.bidPrice.toFixed(2)}}PLN  </p>
+                <p *ngIf="alert.askPrice" class="card-text card-link"> Alert na cene kupna, przy: {{alert.askPrice.toFixed(2)}}PLN </p>
+                <p  class="card-text card-link" > Wygasa {{alert.endDateOfAlert?.slice(0,-9)}}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
   </div>
 
-  <hr *ngIf="remainders.length > 0" />
+  <hr *ngIf="remainders?.length > 0" />
 
   <div class="container last">
     <h3 style="margin-bottom: 2rem">Dodaj Alert</h3>

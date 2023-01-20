@@ -13,12 +13,9 @@ import { Remainder } from "../../Models/Remainder";
   styleUrls: ["./user-profile.component.css"],
 })
 export class UserProfileComponent implements OnInit {
-  public cash_list: Cash[];
-  public remainders: Remainder[];
+  cash_list: Cash[];
+  remainders: Remainder[];
   message: string;
-  askPrice: number[] = [];
-  bidPrice: number[] = [];
-  alert: boolean;
   subscriptions: boolean = false;
 
   constructor(

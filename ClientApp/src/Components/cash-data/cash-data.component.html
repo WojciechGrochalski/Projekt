@@ -50,64 +50,57 @@
 <button type="button" class="btn btn-sm btn-primary me-2" (click)="TakeLastCurrency(iso.value, count.value) ">Send request</button>
 <br/> -->
     <br />
-    <div *ngIf="!result; then table; else api"></div>
-    <ng-template #api>
-      <p *ngIf="!result"><em>Loading...</em></p>
-      <apx-chart
-        [series]="series"
-        [chart]="chart"
-        [title]="title"
-        [yaxis]="yaxis"
-        [xaxis]="xaxis"
-      ></apx-chart>
-    </ng-template>
 
-    <div>
-      <div *ngFor="let chart of chartList">
-        <apx-chart
-          [title]="chart.title"
-          [series]="chart.series"
-          [chart]="chart.chart"
-          [colors]="chart.colors"
-          [yaxis]="chart.yaxis"
-          [xaxis]="chart.xaxis"
-          [dataLabels]="commonOptions.dataLabels"
-          [markers]="commonOptions.markers"
-          [stroke]="commonOptions.stroke"
-          [grid]="commonOptions.grid"
-          [tooltip]="commonOptions.tooltip"
-        ></apx-chart>
+      <div>
+        <div *ngFor="let chart of chartList">
+          <p *ngIf="!chartList"><em>Loading...</em></p>
+          <apx-chart
+            [title]="chart.title"
+            [series]="chart.series"
+            [chart]="chart.chart"
+            [colors]="chart.colors"
+            [yaxis]="chart.yaxis"
+            [xaxis]="chart.xaxis"
+            [dataLabels]="commonOptions.dataLabels"
+            [markers]="commonOptions.markers"
+            [stroke]="commonOptions.stroke"
+            [grid]="commonOptions.grid"
+            [tooltip]="commonOptions.tooltip"
+          ></apx-chart>
+        </div>
       </div>
-    </div>
+
+      <div
+        style="background-color: #e7e9ee62; padding-top: 3rem; padding-bottom: 4rem;"
+      >
+        <div class="container">
+          <h5 style="color: #282f52; font-weight: 700; margin-bottom: 2rem">
+            Tabela aktualnych kursów walut
+          </h5>
+
+          <table class="table table-striped" aria-labelledby="tableLabel">
+            <thead>
+            <tr>
+              <th>Data</th>
+              <th>Waluta</th>
+              <th>Cena kupna (Za tyle kupisz)</th>
+              <th>Cena sprzedaży (Za tyle sprzedasz)</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cash of cash_list">
+              <td>{{ cash.Data }}</td>
+              <td>{{ cash.Name }}</td>
+              <td>{{ cash.AskPrice }} PLN</td>
+              <td>{{ cash.BidPrice }} PLN</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     <br />
   </div>
-  <div
-    style="background-color: #e7e9ee62; padding-top: 3rem; padding-bottom: 4rem;"
-  >
-    <div class="container">
-      <h5 style="color: #282f52; font-weight: 700; margin-bottom: 2rem">
-        Tabela aktualnych kursów walut
-      </h5>
-
-      <table class="table table-striped" aria-labelledby="tableLabel">
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Waluta</th>
-            <th>Cena kupna (Za tyle kupisz)</th>
-            <th>Cena sprzedaży (Za tyle sprzedasz)</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let cash of cash_list">
-            <td>{{ cash.Data }}</td>
-            <td>{{ cash.Name }}</td>
-            <td>{{ cash.AskPrice }} PLN</td>
-            <td>{{ cash.BidPrice }} PLN</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
 </div>
+
+
