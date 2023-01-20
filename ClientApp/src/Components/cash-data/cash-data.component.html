@@ -1,29 +1,39 @@
-<div class="container">
+<div>
+  <div class="container">
+    <h4 style="margin-bottom: 1rem; margin-top: 2rem; font-weight: 700">
+      Aktualne kursy walut na podstawie danych NBP
+    </h4>
+    <br />
 
-<h4>Aktuale kursy walut na podstawie danych NBP</h4>
-<br/>
+    <h5 style="color: #282f52; font-weight: 700; margin-bottom: 1rem">
+      Wykresy walut
+    </h5>
 
-<h5>Wykresy walut</h5>
+    <div style="display: flex; column-gap: 2rem">
+      <div>
+        <label>Wybierz waluty aby wyświetlić wykres </label>
+        <br />
+        <div
+          style="
+            display: inline-block;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-width: 360px;
+          "
+        >
+          <ng-multiselect-dropdown
+            [placeholder]="'Wybierz'"
+            [settings]="dropdownSettings"
+            [data]="dropdownList"
+            [(ngModel)]="selectedItems"
+            (onSelect)="onItemSelect($event)"
+            (onDeSelect)="onItemDeSelect($event)"
+          >
+          </ng-multiselect-dropdown>
+        </div>
+      </div>
 
-
-<div style="display:flex;column-gap: 2rem;">
-  <div>
-    <label >Wybierz waluty aby wyświetlić wykres </label>
-    <br/>
-    <div style="display: inline-block ; align-items: flex-start; justify-content: flex-start; min-width: 360px;">
-      <ng-multiselect-dropdown
-      [placeholder]="'Wybierz'"
-      [settings]="dropdownSettings"
-      [data]="dropdownList"
-      [(ngModel)]="selectedItems"
-      (onSelect)="onItemSelect($event)"
-      (onDeSelect)=" onItemDeSelect($event)"
-    >
-    </ng-multiselect-dropdown>
-    </div>
-  </div>
-
-  <!-- <div>
+      <!-- <div>
     <label >Wybierz ilość dni </label>
     <br/>
 
@@ -34,59 +44,70 @@
       <option value=30>30</option>
     </select>
   </div> -->
-</div>
+    </div>
 
-<!-- <br/><br/>
+    <!-- <br/><br/>
 <button type="button" class="btn btn-sm btn-primary me-2" (click)="TakeLastCurrency(iso.value, count.value) ">Send request</button>
 <br/> -->
-<br/>
-<div *ngIf="!result; then table; else api;"></div>
-<ng-template #api>
-  <p *ngIf="!result"><em>Loading...</em></p>
-  <apx-chart [series]="series" [chart]="chart" [title]="title" [yaxis]="yaxis" [xaxis]="xaxis"></apx-chart>
-</ng-template>
+    <br />
+    <div *ngIf="!result; then table; else api"></div>
+    <ng-template #api>
+      <p *ngIf="!result"><em>Loading...</em></p>
+      <apx-chart
+        [series]="series"
+        [chart]="chart"
+        [title]="title"
+        [yaxis]="yaxis"
+        [xaxis]="xaxis"
+      ></apx-chart>
+    </ng-template>
 
-<div>
-  <div *ngFor="let chart of chartList">
-    <apx-chart
-      [title]="chart.title"
-      [series]="chart.series"
-      [chart]="chart.chart"
-      [colors]="chart.colors"
-      [yaxis]="chart.yaxis"
-      [xaxis]="chart.xaxis"
-      [dataLabels]="commonOptions.dataLabels"
-      [markers]="commonOptions.markers"
-      [stroke]="commonOptions.stroke"
-      [grid]="commonOptions.grid"
-      [tooltip]="commonOptions.tooltip"
-></apx-chart>
+    <div>
+      <div *ngFor="let chart of chartList">
+        <apx-chart
+          [title]="chart.title"
+          [series]="chart.series"
+          [chart]="chart.chart"
+          [colors]="chart.colors"
+          [yaxis]="chart.yaxis"
+          [xaxis]="chart.xaxis"
+          [dataLabels]="commonOptions.dataLabels"
+          [markers]="commonOptions.markers"
+          [stroke]="commonOptions.stroke"
+          [grid]="commonOptions.grid"
+          [tooltip]="commonOptions.tooltip"
+        ></apx-chart>
+      </div>
+    </div>
+    <br />
   </div>
-</div>
-<br/>
+  <div
+    style="background-color: #e7e9ee62; padding-top: 3rem; padding-bottom: 4rem;"
+  >
+    <div class="container">
+      <h5 style="color: #282f52; font-weight: 700; margin-bottom: 2rem">
+        Tabela aktualnych kursów walut
+      </h5>
 
-
-<h5>Tabela aktualnych kursów walut</h5>
-
-<table class='table table-striped ' aria-labelledby="tableLabel">
-
-      <thead>
-        <tr>
-          <th>Data</th>
-          <th>Waluta</th>
-          <th>Cena kupna (Za tyle kupisz)</th>
-          <th>Cena sprzedaży (Za tyle sprzedasz)</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cash of cash_list">
-          <td>{{ cash.Data }}</td>
-          <td>{{ cash.Name}}</td>
-          <td>{{ cash.AskPrice }} PLN</td>
-          <td>{{ cash.BidPrice }} PLN</td>
-        </tr>
-      </tbody>
-    </table>
-
+      <table class="table table-striped" aria-labelledby="tableLabel">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Waluta</th>
+            <th>Cena kupna (Za tyle kupisz)</th>
+            <th>Cena sprzedaży (Za tyle sprzedasz)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cash of cash_list">
+            <td>{{ cash.Data }}</td>
+            <td>{{ cash.Name }}</td>
+            <td>{{ cash.AskPrice }} PLN</td>
+            <td>{{ cash.BidPrice }} PLN</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
