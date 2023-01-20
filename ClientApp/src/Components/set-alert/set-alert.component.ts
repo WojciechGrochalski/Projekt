@@ -20,7 +20,9 @@ export class SetAlertComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private flashMessagesService: FlashMessagesService  ) { }
+    private flashMessagesService: FlashMessagesService) {
+    this.isAdding = false;
+}
 
   ngOnInit() {
     this.userID= +JSON.parse(localStorage.getItem('currentUser')).id;
@@ -53,7 +55,8 @@ export class SetAlertComponent implements OnInit {
 
     this.userService.SetAlert(alert).subscribe(res =>{
         this.flashMessagesService.show(res.message, {cssClass: 'alert-success', timeout: 5000})
-        setTimeout(() => {
+      setTimeout(() => {
+        this.isAdding = false;
           this.router.navigate(['/user-profile']);
         }, 3000)
 

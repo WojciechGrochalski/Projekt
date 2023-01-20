@@ -16,7 +16,7 @@ export class UserProfileComponent implements OnInit {
   cash_list: Cash[];
   remainders: Remainder[];
   message: string;
-  subscriptions: boolean = false;
+  subscriptions: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +54,8 @@ export class UserProfileComponent implements OnInit {
         timeout: 3000,
       });
     });
+    user.sub = true;
+    localStorage.setItem("currentUser", JSON.stringify(user));
     this.subscriptions = true;
   }
   RemoveSubscription() {
@@ -64,6 +66,8 @@ export class UserProfileComponent implements OnInit {
         timeout: 3000,
       });
     });
+    user.sub = false;
+    localStorage.setItem("currentUser", JSON.stringify(user));
     this.subscriptions = false;
   }
   ChangeSubscription() {
